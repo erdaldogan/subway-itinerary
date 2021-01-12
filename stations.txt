@@ -77,31 +77,31 @@
 		{"Tavsantepe": [1496, 714]}
 	],
 	"M5":[
-		"Uskudar",
-		"Fistikagaci",
-		"Baglarbasi",
-		"Altunizade",
-		"Kisikli",
-		"Bulgurlu",
-		"Umraniye",
-		"Carsi",
-		"Yamanevler",
-		"Cakmak",
-		"Ihlamurkuyu",
-		"Altinsehir",
-		"Imam Hatip Lisesi",
-		"Dudullu",
-		"Necip Fazil",
-		"Cekmekoy"
+		{"Uskudar": [985, 617]},
+		{"Fistikagaci": [996, 600]},
+		{"Baglarbasi": [1013, 582]},
+		{"Altunizade": [1032, 565]},
+		{"Kisikli": [1051, 547]},
+		{"Bulgurlu": [1074, 575]},
+		{"Umraniye": [1103, 545]},
+		{"Carsi": [1130, 545]},
+		{"Yamanevler": [1150, 545]},
+		{"Cakmak": [1170, 545]},
+		{"Ihlamurkuyu": [1200, 545]},
+		{"Altinsehir": [1220, 545]},
+		{"Imam Hatip Lisesi": [1240, 545]},
+		{"Dudullu": [1260, 545]},
+		{"Necip Fazil": [1280, 545]},
+		{"Cekmekoy": [1330, 545]}
 	],
 	"M6":[
-		"Levent",
-		"Nispetiye",
-		"Etiler",
-		"Bogazici Universitesi Hisarustu"
+		{"Levent": [860, 431]},
+		{"Nispetiye": [863, 431]},
+		{"Etiler": [898, 431]},
+		{"Bogazici Universitesi Hisarustu": [914, 431]}
 	],
 	"M7":[
-		"Sisli Mecidiyekoy",
+		{"Sisli Mecidiyekoy": [862, 495]},
 		"Caglayan",
 		"Kagithane",
 		"Nurtepe",
@@ -115,6 +115,6 @@
 		"Tekstilkent Giyimkent",
 		"Oruc Reis",
 		"Goztepe Mahallesi",
-		"Mahmutbey"
+		{"Mahmutbey": [474, 516]}
 	]
 }
