@@ -5,24 +5,24 @@ from json import load
 def read_stations(FILE_NAME):
     graph = dict(list())
 
-    previous: Station = None
-    current: Station = None
+    previous = None
 
     file = open(FILE_NAME, 'r')
     data = load(file)
     for line, stations in data.items():
         for s in stations:
             current = Station(line, s[0], tuple(s[1]))
-            current.add_connection(previous)
             if current.name in graph:  # if a station with same name exists
                 if graph[current.name] == current:  # checks if the names and locations of two stations are same
                     graph[current.name].add_line(line)
                     graph[current.name].add_connection(previous)
                     previous = graph[current.name]
                 else:
+                    current.add_connection(previous)
                     graph[current.name] = [graph[current.name], current]
                     previous = current
             else:  # first time seeing the station
+                current.add_connection(previous)
                 graph[current.name] = current  # add to dict
                 previous = current
         previous, current = None, None
