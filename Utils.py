@@ -1,5 +1,6 @@
 from Station import Station
 from json import load
+from typing import List
 
 
 def read_stations(FILE_NAME):
@@ -42,3 +43,13 @@ def get_user_selection(graph, prompt):
             return graph[s_name]
     except KeyError:
         print("Station doesn't exist: ", s_name)
+
+
+def print_itinerary(path: List[Station]):
+    print("◉ {}".format(path[0]))
+    for i in range(1, len(path) - 1):
+        print(" ○ {}".format(path[i]))
+        if len(path[i].line) > 1:
+            print(" ➲ Tranfer to {}".format(path[i + 1].line))
+
+    print("◉ {}".format(path[-1]))
