@@ -10,7 +10,7 @@ class Station:
         return "{}{}{}".format(self.line, self.name, self.coord)
 
     def __str__(self):
-        return "{}: {} at {}".format(self.line, self.name, self.coord)
+        return "{}: {}".format(self.line, self.name, self.coord)
 
     @staticmethod
     def are_nearby(station_a: 'Station', station_b: 'Station'):  # forward reference
