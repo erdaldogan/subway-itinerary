@@ -14,7 +14,7 @@ def main():
     end = get_user_selection(graph, prompt="Please enter the name of your ending station:")
 
     p = map.get_path(start, end)
-    pprint(p)
+    print_itinerary(p)
 
 
 if __name__ == '__main__':
