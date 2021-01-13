@@ -31,7 +31,7 @@ def read_stations(FILE_NAME):
 
 
 def get_user_selection(graph, prompt):
-    s_name = input(prompt)
+    s_name = input(prompt).strip()
     try:
         if type(graph[s_name]) is list:
             print("{} stations has been found with the name '{}'".format(len(graph[s_name]), s_name))
