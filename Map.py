@@ -30,9 +30,10 @@ class Map:
     def estimate_distance(station_a: Station, station_b: Station):
         ax, ay = station_a.coord
         bx, by = station_b.coord
-        delta_x = abs(ax - bx)
-        delta_y = abs(ay - by)
+        delta_x = ax - bx
+        delta_y = ay - by
         return sqrt(delta_x ** 2 + delta_y ** 2)
+
 
     def follow_backwards(self, came_from, start, end):
         path: List[Station] = [end]
@@ -50,10 +51,6 @@ class Map:
         came_from: Dict[Station, Optional[Station]] = {start: None}
         cost_so_far: Dict[Station, int] = {start: 0}
 
-        # self.open_list.add(start)
-        # q = self.get_lowest_cost_neighbors(start, end, 0)
-        # print("LOWEST COST: ", q)
-
         while not frontiers.empty():
             current: Station = frontiers.get()
             if current == end:
@@ -61,8 +58,6 @@ class Map:
                 break
 
             for c in current.connections:
-                # print("\tC: ", c)
-                # print("\tCost so far: ", cost_so_far[current])
                 _cost = cost_so_far[current] + 10
                 # we add 30 because the distance (cost) of moving between two
                 # subway stations are fixed. for out map, it was ~30px between stations
