@@ -1,17 +1,119 @@
 \documentclass{IEEEtran}
 
-\author{Erdal Sidal Dogan}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+
+\author{Erdal Sidal Dogan \\ Computer Engineering Dept. MEF University \\ \today}
 \date{\today}
-\title{Subway Trip Planner}
+\title{Subway Itinerary Planner}
 
 \begin{document}
 	\maketitle
 	\begin{abstract}
-		Artificial Intelligence depends on advanced algorithms such as \textit{A* Search}
+		Artificial Intelligence depends on advanced algorithms to solve various kinds of problems such as searching, optimizing, decision making etc. This paper introduces the implementation of a popular search algorithm, A* Search. The algorithm is applied for finding the shortest path between two subway stations in Istanbul. Given a station and destination from the user, the program returns the shortest itinerary.
 	\end{abstract}
 	
 	\begin{IEEEkeywords}
-		Artificial Intelligence, Search Algorithm, Local Minima
+		Artificial Intelligence, Shortest Path Problem, Algorithm, Search Algorithm
 	\end{IEEEkeywords}
+
+	\section{Introduction}
+	
+	Search problems are being studied by mathematicians and computers scientist for decades. Consequently, there are numerous of algorithms that excel at certain aspects or problems but perform average for other tasks. In this paper, our problem is shortest path finding. Most commonly used algorithms for this problem are:
+	\begin{itemize}
+		\item Depth/Breadth First
+		\item Uniform Cost
+		\item A* Star Search
+		\item Graph Search
+	\end{itemize}
+	and many other customized algorithms. For the path finding problem, we use \textit{A* Search} in our implementation. \newline \par
+	
+	All of this methods share a common terminology which is used in this paper also.
+	
+	\begin{itemize}
+		\item State Space: Set of all possible states the agent can be. For our problem, set of subway stations
+		\item Node: A state on the state space, corresponds to a station in this problem.
+		\item Cost: Cost of moving between two nodes in the state space. Higher distance means higher cost
+		\item Heuristic: Estimation of the cost between two nodes.
+	\end{itemize}
+		
+	
+	\section{Algorithm \& Implementation}
+	\textit{A* Search} algorithm simple yet powerful. It is classified under a group of search algorithms named \textit{Informed Search}. Apart from the \textit{Uninformed Search} algorithms where only the state space, starting node and destination node is known by the agent, informed search has an additional information that makes the searching more efficient. This additional piece of information is called a \textit{heuristic}. \cite{astar}
+	
+	\subsection{Heuristic}
+	In general terms, heuristic is a broad estimation of the likelihood of the present node. For our problem, it is the estimation of the distance between the current node and the destination. Heuristic function is denoted with $h(n)$
+	
+	One simple rule about the heuristics is that \emph{it must not overestimate}. In order to satisfy such requirement, we used the \emph{Euclidean Distance} between two nodes in the state spaces, which guarantees the absence of overestimation by resulting in absolute shortest distance. \newline \par
+	
+	\begin{equation}
+		h(n) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 }
+	\end{equation}
+	
+	\subsection{Algorithm}
+	\textit{A* Search} uses some data structures while conducting the search. Usually, graphs and priority queues. \textit{Priority Queue} is used to get the nodes with the minimum cost available.
+	
+	Cost is calculated as $f(n) = g(n) + h(n)$ where the $f(n)$ is the total cost, $g(n)$ is the current cost of until reaching the node and $h(n)$ estimated distance to goal (heuristic function) \newline \par
+	
+	Algorithm keeps track of the nodes that as been traversed so far. Previous node to each node is known at any time. Also, cost of reaching to that node is stored as well. Traversed nodes are stored in a \texttt{Priority Queue} with their total cost $f(n)$. Retrieval of an element from a \texttt{Priority Queue} results with the retrieval of the element with the least cost. Therefore, when we retrieve an element from Queue, we get the node that is closest to destination according to our knowledge. Each element in this \texttt{Queue} is retrieved and its neighbors are added to the queue until either the queue is empty or the retrieved node is the destination node.
+	
+	
+	\subsection{Implementation Details}
+	Object-Oriented approach has been used for the implementation of this program for convenience. There are \texttt{Station}, \texttt{Map} and \texttt{Priority Queue} objects which provides attributes and methods for the corresponding matter. Also \texttt{Utils.py} file contains the utility functions such as formatted printing, reading the user input etc.
+	
+	\subsection{Input Data}
+	Stations are given to the progam in \textit{JSON}\footnote{JavaScript Object Notation} format. Each subway line is a key and values are the list of stations in that line. \newline 
+	
+	\fbox{\{"Line": [list\_of\_stations]\}} \newline 
+	
+	Also, \texttt{Stations} are given in a list where the first element is the name and second is a tuple that contains the location of the station. Example station can be seen below. \newline 
+	
+	\fbox{["ITU Ayazaga", [883, 335]]} \newline 
+	
+
+	\subsection{Pseudo-code}
+	\begin{algorithm}
+		\caption{A* Search}\label{astar-pseudo}
+		\begin{algorithmic}[1]
+			\Function {get\_path)} {start, destination}
+			\State frontier $\leftarrow$ Priority Queue
+			\State frontier.put(node=start, cost=$0$)
+			\State came\_from $\leftarrow$ dictionary
+			\State cost\_so\_far $\leftarrow$ dictionary
+			\State cost\_so\_far.add(start)
+			\State came\_from[start] $\leftarrow $ NULL
+			\State cost\_so\_far[start] $\leftarrow 0$	
+			\While{frontier \textbf{is not} empty} 
+			\State current $\leftarrow$ frontier.pop()
+			\If{current \textbf{is} destination}
+			\State \textbf{break}
+			\EndIf
+			\For{c \textbf{in} current.get\_neighbors()} 
+			\State \_cost $\leftarrow$ cost\_so\_far[current] + 10
+			\If{c \textbf{not in} cost\_so\_far \textbf{or}\\ \_cost $<$ cost\_so\_far[c]} 
+			\State cost\_so\_far[c] $\leftarrow$ \_cost
+			\State p $\leftarrow$ \_cost  + heuristic(c, destination)
+			\State frontier.put(node=c, cost=p)
+			\State came\_from[c] $\leftarrow$ current
+			\EndIf
+			\EndFor\\
+			\EndWhile
+			
+			\Return came\_from\
+			\EndFunction
+		\end{algorithmic}
+	\end{algorithm}
+	
+	
+	\section{Conclusion \& Future Work}
+	
+	This paper present the implementation of \textit{A* Search Algorithm} on a program that can be used on daily basis. The program is capable of returning the shortest path between two subway stations. \newline
+	
+	As mentioned earlier, there are numerous search algorithms that could have been used for this task. Experiment on these algorithms for similar problems in terms of performance, accuracy, efficient use of computing resources might be conducted in the future.
+	
+	\bibliographystyle{IEEEtran}
+	\bibliography{ref}
 
 \end{document}
